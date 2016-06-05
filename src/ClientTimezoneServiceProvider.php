@@ -40,7 +40,7 @@ class ClientTimezoneServiceProvider extends ServiceProvider
     public function register()
     {
         include __DIR__ . '/routes.php';
-        $this->app->make('KevinOrriss\ClientTimezone\ClientTimezoneController');
         $this->app->make('KevinOrriss\ClientTimezone\ClientTimezone');
+        $this->app->make('KevinOrriss\ClientTimezone\ClientTimezoneController');
     }
 }
