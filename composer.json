@@ -1,0 +1,13 @@
+{
+    "name": "kevinorriss/clienttimezone",
+    "description": "Use javascript to get the users timezone",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Kevin Orriss",
+            "email": "hello@kevinorriss.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
