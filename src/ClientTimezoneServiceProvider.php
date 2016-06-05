@@ -29,7 +29,7 @@ class ClientTimezoneServiceProvider extends ServiceProvider
             throw new Exception("ClientTimezone requires timezone to be set to UTC in /config/app.php");
         }
 
-        $this->loadViewsFrom(__DIR__ . '/views', 'clienttimezone');
+        $this->package('kevinorriss/clienttimezone', null, __DIR__);
     }
 
     /**
