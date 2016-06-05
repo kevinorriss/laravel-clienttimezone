@@ -30,10 +30,6 @@ class ClientTimezoneServiceProvider extends ServiceProvider
         }
 
         $this->loadViewsFrom(__DIR__ . '/views', 'clienttimezone');
-
-        $this->publishes([
-            __DIR__.'/views' => base_path('resources/views/kevinorriss/clienttimezone'),
-        ]);
     }
 
     /**
