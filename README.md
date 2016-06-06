@@ -63,6 +63,16 @@ $carbon = Carbon::now();
 $carbon->addMinutes(ClientTimezone::getOffset());
 ```
 
+There may be times when you do not want javascript to check the client timezone. An example
+of this is when the client creates a new session on your application by following a URL
+to verify their email address, this page displays a flash message, but will be shown briefly
+until Javascript reloads the page. Upon the page reload, the flash message will have expired.
+
+To prevent Javascript from checking the client timezone and reloading the page if it needs to,
+just add this line to your controller before returning a view.
+
+`ClientTimezone::skip();`
+
 ## Authors
 
 * **Kevin Orriss** - [Website](http://kevinorriss.com)
@@ -71,4 +81,4 @@ See also the list of [contributors](https://github.com/kevinorriss/clienttimezon
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](src/LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details
