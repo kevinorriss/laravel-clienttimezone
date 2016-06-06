@@ -11,7 +11,7 @@ then only have to do this once, or until a new session is started.
 
 1. Add ClientTimezone to your composer.json file under `require`:
 
-  `"kevinorriss\clienttimezone": "1.0.*"`
+  `"kevinorriss\clienttimezone": "1.1.*"`
 
 2. Add a PSR-4 entry to your composer.json file under `autoload/psr-4`:
 
