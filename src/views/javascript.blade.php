@@ -1,7 +1,7 @@
 <script>
     $(document).ready(function()
     {
-        if("{{ ClientTimezone::getOffset() }}".length == 0)
+        if({{ (ClientTimezone::check() ? "true" : "false") }})
         {
             var clienttime = new Date();
             var clienttimezone = -clienttime.getTimezoneOffset();

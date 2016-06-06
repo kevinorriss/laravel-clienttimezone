@@ -30,6 +30,13 @@ class ClientTimezone
 	 */
 	const CLIENT_TIMEZONE_POST = "clienttimezone";
 
+	/**
+	 * Flag to skip getting the client timezone
+	 *
+	 * @var boolean
+	 */
+	protected static $skip = FALSE;
+
 
 	/**
 	* Returns the session key where the timezone offset is stored.
@@ -56,6 +63,16 @@ class ClientTimezone
 	}
 
 	/**
+	 * Returns if the client timezone is stored in session or not
+	 *
+	 * @return boolean
+	 */
+	public static function hasOffset()
+	{
+		return Session::has(static::getSessionKey());
+	}
+
+	/**
 	 * Returns the client timezone as the number of minutes offset from the current UTC time.
 	 * If the client timezone is not set in the session, NULL is returned
 	 *
@@ -63,7 +80,7 @@ class ClientTimezone
 	 */
 	public static function getOffset()
 	{
-		if (Session::has(static::getSessionKey()))
+		if (static::hasOffset())
 		{
 			return intval(Session::get(static::getSessionKey()));
 		}
@@ -86,5 +103,23 @@ class ClientTimezone
 	public static function forget()
 	{
 		Session::forget(static::getSessionKey());
+	}
+
+	/**
+	 * Sets the skip flag to true, meaning that the javascript will not check for the client timezone
+	 */
+	public static function skip()
+	{
+		static::$skip = TRUE;
+	}
+
+	/**
+	 * Returns if the client timezone should be checked or not
+	 *
+	 * @return boolean
+	 */
+	public static function check()
+	{
+		return !static::$skip && is_null(static::getOffset());
 	}
 }
