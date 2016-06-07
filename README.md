@@ -56,12 +56,16 @@ CSRF token.
   
 ## Example
 
+###Carbon
+
 ClientTimezone is best used with Carbon to display the users current time.
 
 ```
 $carbon = Carbon::now();
 $carbon->addMinutes(ClientTimezone::getOffset());
 ```
+
+### Skipping checks
 
 There may be times when you do not want javascript to check the client timezone. An example
 of this is when the client creates a new session on your application by following a URL
@@ -72,6 +76,17 @@ To prevent Javascript from checking the client timezone and reloading the page i
 just add this line to your controller before returning a view.
 
 `ClientTimezone::skip();`
+
+### Overriding variables
+
+The ClientTimezone class has three constants, these can be overridden by creating a value
+in the environment file (.env), these values will then be used instead. Examples:
+
+```
+CLIENT_TIMEZONE_SESSION=myoffset
+CLIENT_TIMEZONE_POST=newurl
+CLIENT_TIMEZONE_SKIP=custom_session_skip
+```
 
 ## Authors
 

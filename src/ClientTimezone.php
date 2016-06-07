@@ -31,12 +31,11 @@ class ClientTimezone
 	const CLIENT_TIMEZONE_POST = "clienttimezone";
 
 	/**
-	 * Flag to skip getting the client timezone
+	 * The session key used to flash a skip command
 	 *
-	 * @var boolean
+	 * @var string
 	 */
-	protected static $skip = FALSE;
-
+	const CLIENT_TIMEZONE_SKIP = "clienttimezone_skip";
 
 	/**
 	* Returns the session key where the timezone offset is stored.
@@ -110,7 +109,17 @@ class ClientTimezone
 	 */
 	public static function skip()
 	{
-		static::$skip = TRUE;
+		Session::flash(env('CLIENT_TIMEZONE_SKIP', static::CLIENT_TIMEZONE_SKIP), TRUE);
+	}
+
+	/**
+	 * Returns if javascript should skip checking for the client timezone
+	 *
+	 * @return boolean
+	 */
+	public static function skipped()
+	{
+		return Session::has(static::CLIENT_TIMEZONE_SKIP) && Session::get(static::CLIENT_TIMEZONE_SKIP) == TRUE;
 	}
 
 	/**
@@ -120,6 +129,6 @@ class ClientTimezone
 	 */
 	public static function check()
 	{
-		return !static::$skip && is_null(static::getOffset());
+		return !static::skipped() && is_null(static::getOffset());
 	}
 }
