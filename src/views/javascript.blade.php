@@ -1,14 +1,14 @@
 <script>
     $(document).ready(function()
     {
-        if({{ (ClientTimezone::check() ? "true" : "false") }})
+        if({{ ClientTimezone::checking() ? "true" : "false" }})
         {
             var clienttime = new Date();
             var clienttimezone = -clienttime.getTimezoneOffset();
             $.ajax(
             {
                 type: "POST",
-                url: "{{ url(env('CLIENT_TIMEZONE_POST', ClientTimezone::CLIENT_TIMEZONE_POST)) }}",
+                url: "{{url(ClientTimezone::getPostUrl()) }}",
                 data:
                 {
                     timezoneoffset: clienttimezone

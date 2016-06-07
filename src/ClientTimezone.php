@@ -31,11 +31,11 @@ class ClientTimezone
 	const CLIENT_TIMEZONE_POST = "clienttimezone";
 
 	/**
-	 * Flag to skip getting the client timezone
+	 * The session key for if checking the client timezone should be skipped
 	 *
-	 * @var boolean
+	 * @var string
 	 */
-	protected static $skip = FALSE;
+	const CLIENT_TIMEZONE_SKIP = "clienttimezoneskip";
 
 
 	/**
@@ -45,7 +45,7 @@ class ClientTimezone
 	*
 	* @return string
 	*/
-	protected static function getSessionKey()
+	protected static function getOffsetSessionKey()
 	{
 		return env('CLIENT_TIMEZONE_SESSION', self::CLIENT_TIMEZONE_SESSION);
 	}
@@ -63,13 +63,23 @@ class ClientTimezone
 	}
 
 	/**
+	 * Returns the session key where the skip flag is stored
+	 *
+	 * @return string
+	 */
+	protected static function getSkipSessionKey()
+	{
+		return env('CLIENT_TIMEZONE_SKIP', static::CLIENT_TIMEZONE_SKIP);
+	}
+
+	/**
 	 * Returns if the client timezone is stored in session or not
 	 *
 	 * @return boolean
 	 */
-	public static function hasOffset()
+	protected static function hasOffset()
 	{
-		return Session::has(static::getSessionKey());
+		return Session::has(static::getOffsetSessionKey());
 	}
 
 	/**
@@ -82,7 +92,7 @@ class ClientTimezone
 	{
 		if (static::hasOffset())
 		{
-			return intval(Session::get(static::getSessionKey()));
+			return intval(Session::get(static::getOffsetSessionKey()));
 		}
 		return NULL;
 	}
@@ -94,7 +104,7 @@ class ClientTimezone
 	 */
 	public static function setOffset($offset)
 	{
-		Session::put(static::getSessionKey(), intval($offset));
+		Session::put(static::getOffsetSessionKey(), intval($offset));
 	}
 
 	/**
@@ -102,7 +112,7 @@ class ClientTimezone
 	 */
 	public static function forget()
 	{
-		Session::forget(static::getSessionKey());
+		Session::forget(static::getOffsetSessionKey());
 	}
 
 	/**
@@ -110,16 +120,26 @@ class ClientTimezone
 	 */
 	public static function skip()
 	{
-		static::$skip = TRUE;
+		Session::flash(static::getSkipSessionKey(), TRUE);
 	}
 
 	/**
-	 * Returns if the client timezone should be checked or not
+	 * Returns if checking the client timezone is going to be skipped or not
 	 *
 	 * @return boolean
 	 */
-	public static function check()
+	protected static function skipping()
 	{
-		return !static::$skip && is_null(static::getOffset());
+		return Session::has(static::getSkipSessionKey()) && Session::get(static::getSkipSessionKey()) == TRUE;
+	}
+
+	/**
+	 * Returns if the client timezone will be checked or not
+	 *
+	 * @return boolean
+	 */
+	public static function checking()
+	{
+		return !static::skipping() && is_null(static::getOffset());
 	}
 }
