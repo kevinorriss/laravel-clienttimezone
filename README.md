@@ -11,21 +11,17 @@ then only have to do this once, or until a new session is started.
 
 1. Add ClientTimezone to your composer.json file under `require`:
 
-  `"kevinorriss\clienttimezone": "1.1.*"`
+  `"kevinorriss\clienttimezone": "1.2.*"`
 
-2. Add a PSR-4 entry to your composer.json file under `autoload/psr-4`:
-
-  `"KevinOrriss\\ClientTimezone\\": "vendor/kevinorriss/clienttimezone/src/"`
-
-3. Add the ClientTimezoneServiceProvider to your app.php file:
+2. Add the ClientTimezoneServiceProvider to your app.php file:
 
   `KevinOrriss\ClientTimezone\ClientTimezoneServiceProvider::class,`
   
-4. Add the ClientTimezone alias to your app.php file:
+3. Add the ClientTimezone alias to your app.php file:
 
   `'ClientTimezone' => KevinOrriss\ClientTimezone\ClientTimezone::class,`
 
-5. Run `composer update`
+4. Run `composer update`
 
 ## Usage
 
